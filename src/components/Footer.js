@@ -8,5 +8,4 @@ export default function Footer() {
       <span className="footer-right">Full Stack Developer • AI Engineer</span>
     </footer>
   );
-
 }
