@@ -45,7 +45,7 @@ export default function About() {
           </div>
           <div className="about-text">
             <p>
-              I'm <strong>Kishore Vijay</strong>, a developer pursuing an Integrated
+              I'm <strong>Kishore Selvaraj</strong>, a developer pursuing an Integrated
               M.Sc. in Information Technology at CEG. I specialize in full-stack
               development with the MERN stack and love building systems that bridge
               real-world usability with scalable architecture.
