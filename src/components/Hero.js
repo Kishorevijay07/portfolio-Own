@@ -59,7 +59,6 @@ function Terminal() {
   const bodyRef = useRef(null);
 
   useEffect(() => {
-    let idx = 0;
     let timeouts = [];
     let elapsed = 1800;
 
@@ -68,7 +67,6 @@ function Terminal() {
       elapsed += delay;
       const t = setTimeout(() => {
         setLines((prev) => [...prev, line]);
-        idx++;
       }, elapsed);
       timeouts.push(t);
     });

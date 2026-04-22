@@ -51,9 +51,9 @@ export default function Contact() {
             >
               GitHub
             </a>
-            {/* ── Replace # with your real LinkedIn / Twitter URLs ── */}
-            <a href="#" className="social-link">LinkedIn</a>
-            <a href="#" className="social-link">Twitter</a>
+            {/* ── Replace with your real LinkedIn / Twitter URLs ── */}
+            <a href="https://linkedin.com/" className="social-link" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://twitter.com/" className="social-link" target="_blank" rel="noreferrer">Twitter</a>
           </div>
         </div>
       </div>
