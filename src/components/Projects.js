@@ -4,16 +4,35 @@ import './Projects.css';
 const PROJECTS = [
   {
     num: '01 — FEATURED',
+    icon: '🛡️',
+    title: 'TrustLayer AI',
+    desc: 'An advanced decision-support system and AI assistant featuring an Advice Engine, automated alert prioritization, and proactive threat detection via IndicBERT.',
+    tags: ['Android', 'AI/ML', 'IndicBERT', 'Room DB'],
+    category: 'AI + Mobile',
+    featured: true,
+    link: 'https://github.com/kishorevijay07',
+  },
+  {
+    num: '02 — FEATURED',
+    icon: '🧠',
+    title: 'Multimodel Agent',
+    desc: 'A comprehensive AI agent built with FastAPI, integrating a RAG pipeline, orchestrator, and chat services for dynamic, multi-model interactions and decision making.',
+    tags: ['Python', 'FastAPI', 'LLMs', 'RAG'],
+    category: 'AI Backend',
+    featured: true,
+    link: 'https://github.com/kishorevijay07',
+  },
+  {
+    num: '03',
     icon: '🔬',
     title: 'Multimodel OCR System',
     desc: 'An advanced OCR system that dynamically combines multiple models to extract text from noisy, low-quality, and mixed-format documents. Handles PDFs, images, and structured documents with a multi-stage post-processing pipeline.',
     tags: ['Python', 'OpenCV', 'Tesseract', 'Deep Learning', 'Node.js'],
     category: 'AI + Full Stack',
-    featured: true,
     link: 'https://github.com/kishorevijay07',
   },
   {
-    num: '02',
+    num: '04',
     icon: '🤖',
     title: 'Offline Py Pro Coach',
     desc: 'A fully offline AI-powered coding assistant for Python developers. Provides code suggestions, debugging help, and concept explanations — no internet required. Optimized for low-connectivity environments.',
@@ -22,7 +41,7 @@ const PROJECTS = [
     link: 'https://github.com/kishorevijay07',
   },
   {
-    num: '03',
+    num: '05',
     icon: '📋',
     title: 'Attendance Digital System',
     desc: 'Comprehensive MERN-based college attendance management. Handles staff-subject allocation, batch/department filtering, and complex schema relationships with ObjectId — replacing manual tracking entirely.',
@@ -31,7 +50,7 @@ const PROJECTS = [
     link: 'https://github.com/kishorevijay07',
   },
   {
-    num: '04',
+    num: '06',
     icon: '⚡',
     title: 'EV Charging Booking System',
     desc: 'Map-based EV charging station discovery, slot booking, and secure Stripe payment integration. Includes booking history tracking and complex pricing logic with webhook handling.',
@@ -40,7 +59,7 @@ const PROJECTS = [
     link: 'https://github.com/kishorevijay07',
   },
   {
-    num: '05',
+    num: '07',
     icon: '🏠',
     title: 'Airbnb-style Room Booking',
     desc: 'Full-stack booking platform with image upload via Cloudinary, dynamic pricing, search & filtering, and Stripe payments. Async data handled with React Query for optimized performance.',
@@ -49,7 +68,7 @@ const PROJECTS = [
     link: 'https://github.com/kishorevijay07',
   },
   {
-    num: '06',
+    num: '08',
     icon: '📊',
     title: 'ML Prediction Models',
     desc: 'Collection of machine learning models: food delivery time prediction, book sales forecasting, and stock price prediction. Built with real datasets and production-ready preprocessing pipelines.',
