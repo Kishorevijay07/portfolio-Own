@@ -74,7 +74,7 @@ function useReveal(threshold = 0.1) {
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
+  }, [threshold]);
   return ref;
 }
 
