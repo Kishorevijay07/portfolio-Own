@@ -77,7 +77,7 @@ export default function About() {
             <div className="avatar-ring2" />
             <div className="avatar-ring" />
             <div className="avatar-hex">
-              <img className="avatar-img" src="https://avatars.githubusercontent.com/u/174960275?s=400&u=e90174ad5ec9275efe7a14a3f9b18378f778e3be&v=4" alt="Kishore Selvaraj" />
+              <img className="avatar-img" src={`${process.env.PUBLIC_URL}/kishore.jpg`} alt="Kishore Selvaraj" />
             </div>
             <div className="avatar-dot" />
           </div>
