@@ -1,116 +1,94 @@
 import React, { useEffect, useRef } from 'react';
 import './Skills.css';
 
-const SKILL_BARS = [
+const PROFICIENCY = [
   {
-    category: 'Programming',
-    skills: [
-      { name: 'Python', pct: 95 },
-      { name: 'JavaScript', pct: 90 },
-      { name: 'C++', pct: 75 },
-    ],
-  },
-  {
-    category: 'Web & Frontend',
-    skills: [
-      { name: 'React.js', pct: 90 },
-      { name: 'HTML/CSS', pct: 88 },
-      { name: 'Responsive Design', pct: 85 },
-    ],
-  },
-  {
-    category: 'Backend & Systems',
-    skills: [
-      { name: 'FastAPI', pct: 95 },
-      { name: 'Node.js / Express', pct: 90 },
-      { name: 'REST API Design', pct: 92 },
-      { name: 'Scalable Systems', pct: 85 },
-    ],
-  },
-];
-const SKILL_BARS_RIGHT = [
-  {
-    category: 'Machine Learning & NLP',
-    skills: [
-      { name: 'Regression & Classification', pct: 90 },
-      { name: 'Clustering', pct: 85 },
-      { name: 'CNN / LSTM', pct: 80 },
-      { name: 'BERT Fine-Tuning', pct: 88 },
-      { name: 'NER & Text Classification', pct: 90 },
-    ],
-  },
-  {
-    category: 'Databases',
-    skills: [
-      { name: 'MongoDB', pct: 88 },
-      { name: 'MySQL', pct: 80 },
-      { name: 'Schema Design', pct: 85 },
-    ],
-  },
-
-];
-
-const TECH_BADGES = [
-  'MLflow',
-  'HuggingFace Transformers',
-  'OpenCV',
-  'Tesseract OCR',
-  'EasyOCR',
-  'Git & GitHub',
-  'Postman',
-  'Docker',
-  'AWS',
-];
-
-function SkillBar({ name, pct }) {
-  const fillRef = useRef(null);
-  const animated = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !animated.current) {
-          animated.current = true;
-          setTimeout(() => {
-            if (fillRef.current) fillRef.current.style.width = pct + '%';
-          }, 200);
-        }
+    level: 'Core',
+    hint: 'daily-driver stack — shipped production work with these',
+    groups: [
+      {
+        category: 'Languages',
+        skills: ['Python', 'JavaScript / TypeScript'],
       },
-      { threshold: 0.3 }
-    );
-    if (fillRef.current) observer.observe(fillRef.current);
-    return () => observer.disconnect();
-  }, [pct]);
-
-  return (
-    <div className="skill-bar-item">
-      <div className="skill-bar-header">
-        <span className="skill-name">{name}</span>
-        <span className="skill-pct">{pct}%</span>
-      </div>
-      <div className="skill-bar-bg">
-        <div ref={fillRef} className="skill-bar-fill" style={{ width: 0 }} />
-      </div>
-    </div>
-  );
-}
-
-function SkillCategory({ category, skills }) {
-  return (
-    <div className="skill-category">
-      <div className="skill-cat-title">{category}</div>
-      {skills.map((s) => (
-        <SkillBar key={s.name} name={s.name} pct={s.pct} />
-      ))}
-    </div>
-  );
-}
+      {
+        category: 'Frontend',
+        skills: ['React.js', 'Next.js', 'Tailwind CSS', 'Responsive Design'],
+      },
+      {
+        category: 'Backend',
+        skills: ['FastAPI', 'Node.js / Express', 'REST APIs', 'WebSockets'],
+      },
+      {
+        category: 'AI / LLM',
+        skills: [
+          'LangChain / LangGraph',
+          'RAG Pipelines',
+          'Prompt Engineering',
+          'OpenAI API',
+          'Anthropic Claude',
+        ],
+      },
+      {
+        category: 'Databases',
+        skills: ['PostgreSQL', 'MongoDB', 'Schema Design'],
+      },
+    ],
+  },
+  {
+    level: 'Comfortable',
+    hint: 'used in real projects, reach for these often',
+    groups: [
+      {
+        category: 'AI / ML',
+        skills: [
+          'BERT Fine-Tuning',
+          'HuggingFace Transformers',
+          'Vector DBs (Pinecone, Chroma)',
+          'Function Calling / Tool Use',
+          'NER & Text Classification',
+        ],
+      },
+      {
+        category: 'SaaS & Infra',
+        skills: [
+          'Multi-tenant Architecture',
+          'Stripe Billing',
+          'Redis / Caching',
+          'Docker',
+          'GitHub Actions',
+        ],
+      },
+      {
+        category: 'Tooling',
+        skills: ['Git', 'Postman', 'Vercel', 'AWS (EC2, S3)'],
+      },
+    ],
+  },
+  {
+    level: 'Learning',
+    hint: 'actively going deeper on these',
+    groups: [
+      {
+        category: 'Currently exploring',
+        skills: [
+          'Kubernetes',
+          'gRPC',
+          'Rust',
+          'Fine-tuning open-source LLMs',
+          'Observability (OpenTelemetry)',
+        ],
+      },
+    ],
+  },
+];
 
 function useReveal() {
   const ref = useRef(null);
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) entry.target.classList.add('visible'); },
+      ([entry]) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      },
       { threshold: 0.15 }
     );
     if (ref.current) observer.observe(ref.current);
@@ -119,10 +97,36 @@ function useReveal() {
   return ref;
 }
 
+function ProficiencyBlock({ level, hint, groups }) {
+  const ref = useReveal();
+  const levelClass = level.toLowerCase();
+  return (
+    <div ref={ref} className={`prof-block reveal prof-${levelClass}`}>
+      <div className="prof-header">
+        <span className={`prof-badge prof-badge-${levelClass}`}>{level}</span>
+        <span className="prof-hint">{hint}</span>
+      </div>
+      <div className="prof-groups">
+        {groups.map((g) => (
+          <div key={g.category} className="prof-group">
+            <div className="prof-group-title">{g.category}</div>
+            <div className="pill-cloud">
+              {g.skills.map((s) => (
+                <span key={s} className="pill">
+                  <span className="pill-dot" />
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Skills() {
   const headerRef = useReveal();
-  const leftRef   = useReveal();
-  const rightRef  = useReveal();
 
   return (
     <section id="skills" className="skills-section">
@@ -134,33 +138,10 @@ export default function Skills() {
         <div className="section-line" />
       </div>
 
-      <div className="skills-layout">
-        {/* Left column */}
-        <div ref={leftRef} className="reveal">
-          {SKILL_BARS.map((cat) => (
-            <SkillCategory key={cat.category} {...cat} />
-          ))}
-        </div>
-
-        {/* Right column */}
-        <div ref={rightRef} className="reveal">
-          {SKILL_BARS_RIGHT.map((cat) => (
-            <SkillCategory key={cat.category} {...cat} />
-          ))}
-
-          {/* DevOps badges */}
-          <div className="skill-category">
-            <div className="skill-cat-title">DevOps &amp; Tools</div>
-            <div className="tech-cloud">
-              {TECH_BADGES.map((b) => (
-                <div key={b} className="tech-badge">
-                  <div className="tech-dot" />
-                  {b}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <div className="prof-stack">
+        {PROFICIENCY.map((p) => (
+          <ProficiencyBlock key={p.level} {...p} />
+        ))}
       </div>
     </section>
   );

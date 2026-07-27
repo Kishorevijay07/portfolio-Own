@@ -4,26 +4,37 @@ import './Projects.css';
 const PROJECTS = [
   {
     num: '01 — FEATURED',
-    icon: '🛡️',
-    title: 'TrustLayer AI',
-    desc: 'An advanced decision-support system and AI assistant featuring an Advice Engine, automated alert prioritization, and proactive threat detection via IndicBERT.',
-    tags: ['Android', 'AI/ML', 'IndicBERT', 'Room DB'],
-    category: 'AI + Mobile',
+    icon: '🚀',
+    title: 'SaaS Product Platform',
+    desc: 'A production-ready multi-tenant SaaS with workspace-scoped data isolation, Stripe-powered subscription tiers (trial → pro → team), invite-based team collaboration, and a plugin dashboard where users add integrations without redeploying. Ships with usage metering, audit logs, and a self-serve admin panel — the boilerplate I wish I had when starting my first SaaS.',
+    tags: ['Next.js', 'FastAPI', 'PostgreSQL', 'Stripe', 'Multi-tenant', 'Docker'],
+    category: 'SaaS / Full Stack',
     featured: true,
+    image: '/projects/saas.png',
     link: 'https://github.com/kishorevijay07',
   },
   {
     num: '02 — FEATURED',
+    icon: '🤖',
+    title: 'AgentOS',
+    desc: 'A runtime for building and orchestrating LLM agents — pluggable tool registry, shared memory across agents, a planner that decomposes goals into sub-tasks, and streaming multi-agent workflows over WebSockets. Model-agnostic (OpenAI, Claude, local Llama), with built-in RAG, function-calling, and a trace viewer to debug every step an agent took.',
+    tags: ['Python', 'LangGraph', 'FastAPI', 'Vector DB', 'Streaming', 'Multi-Agent'],
+    category: 'AI / Agentic Systems',
+    featured: true,
+    image: '/projects/agentos.png',
+    link: 'https://github.com/kishorevijay07',
+  },
+  {
+    num: '03',
     icon: '🧠',
     title: 'Multimodel Agent',
     desc: 'A comprehensive AI agent built with FastAPI, integrating a RAG pipeline, orchestrator, and chat services for dynamic, multi-model interactions and decision making.',
     tags: ['Python', 'FastAPI', 'LLMs', 'RAG'],
     category: 'AI Backend',
-    featured: true,
     link: 'https://github.com/kishorevijay07',
   },
   {
-    num: '03',
+    num: '04',
     icon: '🔬',
     title: 'Multimodel OCR System',
     desc: 'An advanced OCR system that dynamically combines multiple models to extract text from noisy, low-quality, and mixed-format documents. Handles PDFs, images, and structured documents with a multi-stage post-processing pipeline.',
@@ -32,7 +43,7 @@ const PROJECTS = [
     link: 'https://github.com/kishorevijay07',
   },
   {
-    num: '04',
+    num: '05',
     icon: '🤖',
     title: 'Offline Py Pro Coach',
     desc: 'A fully offline AI-powered coding assistant for Python developers. Provides code suggestions, debugging help, and concept explanations — no internet required. Optimized for low-connectivity environments.',
@@ -41,7 +52,7 @@ const PROJECTS = [
     link: 'https://github.com/kishorevijay07',
   },
   {
-    num: '05',
+    num: '06',
     icon: '📋',
     title: 'Attendance Digital System',
     desc: 'Comprehensive MERN-based college attendance management. Handles staff-subject allocation, batch/department filtering, and complex schema relationships with ObjectId — replacing manual tracking entirely.',
@@ -49,37 +60,11 @@ const PROJECTS = [
     category: 'MERN',
     link: 'https://github.com/kishorevijay07',
   },
-  {
-    num: '06',
-    icon: '⚡',
-    title: 'EV Charging Booking System',
-    desc: 'Map-based EV charging station discovery, slot booking, and secure Stripe payment integration. Includes booking history tracking and complex pricing logic with webhook handling.',
-    tags: ['React (Vite)', 'Stripe', 'Leaflet', 'MongoDB'],
-    category: 'MERN + Payments',
-    link: 'https://github.com/kishorevijay07',
-  },
-  {
-    num: '07',
-    icon: '🏠',
-    title: 'Airbnb-style Room Booking',
-    desc: 'Full-stack booking platform with image upload via Cloudinary, dynamic pricing, search & filtering, and Stripe payments. Async data handled with React Query for optimized performance.',
-    tags: ['React', 'Cloudinary', 'Stripe', 'React Query'],
-    category: 'Full Stack',
-    link: 'https://github.com/kishorevijay07',
-  },
-  {
-    num: '08',
-    icon: '📊',
-    title: 'ML Prediction Models',
-    desc: 'Collection of machine learning models: food delivery time prediction, book sales forecasting, and stock price prediction. Built with real datasets and production-ready preprocessing pipelines.',
-    tags: ['Python', 'Scikit-learn', 'Pandas', 'ML'],
-    category: 'Machine Learning',
-    link: 'https://github.com/kishorevijay07',
-  },
 ];
 
 function ProjectCard({ project, delay }) {
   const ref = useRef(null);
+  const [imgOk, setImgOk] = React.useState(!!project.image);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -98,6 +83,17 @@ function ProjectCard({ project, delay }) {
       className={`project-card reveal ${project.featured ? 'featured' : ''}`}
       style={{ transitionDelay: `${delay}s` }}
     >
+      {project.image && imgOk && (
+        <div className="project-shot">
+          <img
+            src={`${process.env.PUBLIC_URL}${project.image}`}
+            alt={`${project.title} screenshot`}
+            onError={() => setImgOk(false)}
+            loading="lazy"
+          />
+          <span className="project-shot-overlay" aria-hidden="true" />
+        </div>
+      )}
       <span className="project-num">{project.num}</span>
       <div className="project-icon">{project.icon}</div>
       <div className="project-title">{project.title}</div>
