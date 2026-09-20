@@ -1,0 +1,27 @@
+# Render Blueprint for the portfolio AI assistant backend.
+# Create the service via https://render.com → New → Blueprint, pointing at this repo.
+# Set OPENROUTER_API_KEY (and ALLOWED_ORIGINS) in the Render dashboard — never commit it.
+services:
+  - type: web
+    name: kishore-portfolio-assistant
+    runtime: python
+    rootDir: backend
+    plan: free
+    # Install deps, then pre-build the embeddings index (also warms the model
+    # cache into the build slug so the first request after a cold start is fast).
+    buildCommand: "pip install -r requirements.txt && python scripts/build_index.py"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    healthCheckPath: /health
+    envVars:
+      - key: OPENROUTER_API_KEY
+        sync: false            # set this secret in the dashboard
+      - key: OPENROUTER_MODEL
+        value: meta-llama/llama-3.3-70b-instruct:free
+      - key: ALLOWED_ORIGINS
+        sync: false            # e.g. https://your-portfolio.vercel.app
+      - key: EMBED_MODEL
+        value: BAAI/bge-small-en-v1.5
+      - key: TOP_K
+        value: "4"
+      - key: PYTHON_VERSION
+        value: "3.11.9"
