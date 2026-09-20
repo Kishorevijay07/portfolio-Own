@@ -71,15 +71,15 @@ export default function About() {
           </div>
         </div>
 
-        {/* Avatar */}
+        {/* Photo */}
         <div ref={rightRef} className="reveal avatar-col">
-          <div className="about-avatar">
-            <div className="avatar-ring2" />
-            <div className="avatar-ring" />
-            <div className="avatar-hex">
-              <img className="avatar-img" src={`${process.env.PUBLIC_URL}/kishore.jpg`} alt="Kishore Selvaraj" />
-            </div>
-            <div className="avatar-dot" />
+          <div className="about-photo-frame">
+            <span className="about-photo-accent" aria-hidden="true" />
+            <img
+              className="about-photo"
+              src={`${process.env.PUBLIC_URL}/kishore.jpg`}
+              alt="Kishore Selvaraj"
+            />
           </div>
         </div>
       </div>

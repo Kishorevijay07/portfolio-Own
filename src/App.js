@@ -1,7 +1,4 @@
 import React from 'react';
-import Cursor from './components/Cursor';
-import MatrixCanvas from './components/MatrixCanvas';
-import Particles from './components/Particles';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import StatsRow from './components/StatsRow';
@@ -10,13 +7,11 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ChatWidget from './components/Assistant/ChatWidget';
 
 function App() {
   return (
     <>
-      <Cursor />
-      <MatrixCanvas />
-      <Particles />
       <Navbar />
       <main>
         <Hero />
@@ -27,6 +22,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
+      <ChatWidget />
     </>
   );
 }

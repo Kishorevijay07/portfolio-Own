@@ -1,27 +1,36 @@
 .skills-section {
   position: relative;
   z-index: 10;
-  padding: 100px 80px;
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
+  padding: 110px 48px;
+  background: var(--bg-soft);
+}
+
+.skills-section .section-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.skills-section .section-line {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .prof-stack {
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  max-width: 1200px;
+  gap: 24px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .prof-block {
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 28px 32px;
+  border-radius: var(--radius);
+  padding: 30px 34px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 
 .prof-block::before {
@@ -30,53 +39,53 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 3px;
-  background: var(--green);
-  opacity: 0.7;
+  width: 4px;
+  background: var(--accent);
 }
 
-.prof-comfortable::before { background: var(--accent, #4ade80); opacity: 0.55; }
-.prof-learning::before    { background: var(--amber, #febc2e); opacity: 0.5; }
+.prof-comfortable::before { background: #5b8def; }
+.prof-learning::before    { background: var(--amber); }
 
 .prof-block:hover {
-  border-color: var(--border-bright);
-  box-shadow: 0 10px 40px rgba(0, 255, 136, 0.05);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
 }
 
 .prof-header {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
 }
 
 .prof-badge {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  padding: 6px 12px;
-  border-radius: 3px;
-  border: 1px solid var(--green);
-  color: var(--green);
-  background: var(--green-glow);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  color: var(--accent-ink);
+  background: var(--accent-soft);
 }
 
 .prof-badge-comfortable {
-  border-color: rgba(0, 255, 136, 0.5);
-  color: rgba(0, 255, 136, 0.9);
+  border-color: rgba(91, 141, 239, 0.5);
+  color: #3f6fd8;
+  background: rgba(91, 141, 239, 0.1);
 }
 
 .prof-badge-learning {
-  border-color: rgba(254, 188, 46, 0.6);
-  color: #febc2e;
-  background: rgba(254, 188, 46, 0.08);
+  border-color: rgba(214, 158, 46, 0.6);
+  color: #b07d16;
+  background: rgba(214, 158, 46, 0.12);
 }
 
 .prof-hint {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-dim);
   font-style: italic;
 }
@@ -84,15 +93,16 @@
 .prof-groups {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  gap: 26px;
 }
 
 .prof-group-title {
-  font-size: 11px;
-  letter-spacing: 2px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 12px;
+  font-weight: 600;
+  color: var(--text-soft);
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -112,58 +122,57 @@
 }
 
 .pill {
-  padding: 7px 14px;
-  background: var(--bg3);
+  padding: 8px 15px;
+  background: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text);
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: all 0.2s;
-  cursor: none;
 }
 
 .pill:hover {
-  background: var(--green-glow);
-  border-color: var(--green);
-  color: var(--green);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-ink);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 255, 136, 0.12);
 }
 
 .pill-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 6px var(--green);
+  background: var(--accent);
   flex-shrink: 0;
 }
 
-.prof-badge-learning ~ .prof-groups .pill-dot,
-.prof-learning .pill-dot {
-  background: #febc2e;
-  box-shadow: 0 0 6px #febc2e;
+.prof-comfortable .pill-dot { background: #5b8def; }
+.prof-learning .pill-dot { background: var(--amber); }
+
+.prof-comfortable .pill:hover {
+  background: rgba(91, 141, 239, 0.1);
+  border-color: #5b8def;
+  color: #3f6fd8;
 }
 
 .prof-learning .pill:hover {
-  background: rgba(254, 188, 46, 0.1);
-  border-color: #febc2e;
-  color: #febc2e;
-  box-shadow: 0 6px 18px rgba(254, 188, 46, 0.12);
+  background: rgba(214, 158, 46, 0.12);
+  border-color: var(--amber);
+  color: #b07d16;
 }
 
 @media (max-width: 900px) {
   .skills-section {
-    padding: 60px 24px;
+    padding: 70px 24px;
   }
   .prof-block {
-    padding: 22px 20px;
+    padding: 24px 22px;
   }
   .prof-groups {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 22px;
   }
 }
