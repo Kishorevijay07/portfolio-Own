@@ -17,7 +17,7 @@ from typing import Dict, List, Optional
 import numpy as np
 
 from . import config, embed
-from .chunker import load_markdown_chunks
+from .chunker import load_source_chunks
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 INDEX_PATH = DATA_DIR / "embeddings.json"
@@ -43,9 +43,9 @@ class KnowledgeIndex:
                 self.source = "embeddings.json"
                 return
 
-        # Fallback: build chunks from markdown, no vectors (keyword retrieval).
-        self.chunks = load_markdown_chunks()
-        self.source = "markdown" if self.chunks else "none"
+        # Fallback: build chunks from the source files, no vectors (keyword retrieval).
+        self.chunks = load_source_chunks()
+        self.source = "sources" if self.chunks else "none"
 
     @staticmethod
     def _normalize(matrix: np.ndarray) -> np.ndarray:

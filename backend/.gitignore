@@ -5,3 +5,8 @@ __pycache__/
 *.pyc
 .fastembed_cache/
 .pytest_cache/
+
+# Private, full personal knowledge base — kept locally, never committed/deployed.
+# The professional-only version lives in data/knowledge/about-me.txt.
+*.full.local.txt
+about me.txt

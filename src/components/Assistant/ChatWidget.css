@@ -207,6 +207,15 @@
   border-radius: 999px;
 }
 
+/* Streaming cursor */
+.stream-cursor {
+  display: inline-block;
+  margin-left: 1px;
+  color: var(--accent);
+  font-weight: 700;
+  animation: blink 0.9s steps(2, start) infinite;
+}
+
 /* Typing dots */
 .typing-dots {
   display: inline-flex;

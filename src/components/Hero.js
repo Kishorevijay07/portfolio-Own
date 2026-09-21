@@ -81,6 +81,14 @@ export default function Hero() {
             <a href="#projects" className="btn btn-primary">
               View Projects
             </a>
+            <a
+              href={`${process.env.PUBLIC_URL}/resume.pdf`}
+              className="btn btn-ghost"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Résumé ↓
+            </a>
             <a href="#contact" className="btn btn-ghost">
               Say Hello
             </a>

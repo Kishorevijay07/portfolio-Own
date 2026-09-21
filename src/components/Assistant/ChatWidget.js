@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useBackend from '../../hooks/useBackend';
-import { askQuestion } from '../../lib/api';
+import { askQuestion, askQuestionStream } from '../../lib/api';
 import './ChatWidget.css';
 
 const STORAGE_KEY = 'ks_assistant_msgs';
@@ -76,24 +76,45 @@ export default function ChatWidget() {
     return () => window.removeEventListener('open-assistant', openHandler);
   }, []);
 
+  const patchLast = (patch) =>
+    setMessages((prev) => {
+      if (!prev.length) return prev;
+      const copy = prev.slice();
+      const i = copy.length - 1;
+      copy[i] = typeof patch === 'function' ? patch(copy[i]) : { ...copy[i], ...patch };
+      return copy;
+    });
+
   const doAsk = useCallback(async (question, history) => {
     setPreparing(false);
     setSending(true);
+    // Add an empty assistant bubble that fills in as tokens stream.
+    setMessages((prev) => [...prev, { role: 'assistant', content: '', streaming: true }]);
+
     try {
-      const { answer, sources } = await askQuestion(question, history);
-      setMessages((prev) => [...prev, { role: 'assistant', content: answer, sources }]);
+      await askQuestionStream(question, history, {
+        onSources: (sources) => patchLast((m) => ({ ...m, sources })),
+        onToken: (t) => patchLast((m) => ({ ...m, content: m.content + t })),
+        onDone: () => patchLast((m) => ({ ...m, streaming: false })),
+      });
+      patchLast((m) => ({ ...m, streaming: false }));
     } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content:
-            err && err.message
-              ? err.message
-              : "I couldn't reach the server just now. Please try again in a moment.",
-          isError: true,
-        },
-      ]);
+      // If nothing streamed yet, try the non-streaming endpoint as a fallback.
+      const last = messagesRef.current[messagesRef.current.length - 1];
+      if (last && last.role === 'assistant' && !last.content) {
+        try {
+          const { answer, sources } = await askQuestion(question, history);
+          patchLast({ content: answer, sources, streaming: false });
+        } catch (err2) {
+          patchLast({
+            content: err2.message || "I couldn't reach the server just now. Please try again.",
+            isError: true,
+            streaming: false,
+          });
+        }
+      } else {
+        patchLast((m) => ({ ...m, streaming: false }));
+      }
     } finally {
       setSending(false);
     }
@@ -183,7 +204,17 @@ export default function ChatWidget() {
           <div className="assistant-body" ref={bodyRef}>
             {messages.map((m, i) => (
               <div key={i} className={`msg msg-${m.role} ${m.isError ? 'msg-error' : ''}`}>
-                <div className="msg-bubble">{m.content}</div>
+                <div className="msg-bubble">
+                  {m.content}
+                  {m.streaming && m.content && <span className="stream-cursor">▍</span>}
+                  {m.streaming && !m.content && (
+                    <div className="typing-dots">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
+                  )}
+                </div>
                 {m.sources && m.sources.length > 0 && (
                   <div className="msg-sources">
                     {m.sources.map((s) => (
@@ -204,18 +235,6 @@ export default function ChatWidget() {
                     Waking up the free server — this can take ~30–60s. Your question will send
                     itself the moment it's ready. 🚀
                   </div>
-                  <div className="typing-dots">
-                    <span />
-                    <span />
-                    <span />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {sending && !preparing && (
-              <div className="msg msg-assistant">
-                <div className="msg-bubble">
                   <div className="typing-dots">
                     <span />
                     <span />

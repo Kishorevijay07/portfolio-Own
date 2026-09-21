@@ -17,15 +17,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app import config, embed  # noqa: E402
-from app.chunker import load_markdown_chunks  # noqa: E402
+from app.chunker import load_source_chunks  # noqa: E402
 
 OUT_PATH = Path(__file__).resolve().parent.parent / "data" / "embeddings.json"
 
 
 def main() -> None:
-    chunks = load_markdown_chunks()
+    chunks = load_source_chunks()
     if not chunks:
-        print("No knowledge markdown found — nothing to build.")
+        print("No knowledge sources found (add public/resume.pdf or files in data/knowledge/).")
         return
 
     print(f"Chunked knowledge into {len(chunks)} pieces. Embedding with {config.EMBED_MODEL} ...")

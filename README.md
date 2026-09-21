@@ -64,6 +64,20 @@ Render → New → Blueprint → this repo (uses `backend/render.yaml`). In the 
 
 ---
 
+## ✨ Features
+- **Streaming AI answers** — the assistant types responses token-by-token (SSE).
+- **Live GitHub stats** — the counters pull cached repos/stars/followers from the backend.
+- **Contact form** — sends you an email (Resend or SMTP); falls back to a mailto link if not configured.
+- **Résumé** — "Résumé" buttons in the hero and Contact link to `public/resume.pdf`.
+  👉 **Add your own file at `public/resume.pdf`** (it's linked but not included in the repo).
+
 ## 🧠 Editing what the AI knows
-The assistant answers from `backend/data/knowledge/*.md` (profile, projects, skills, faq). Edit those,
-run `python scripts/build_index.py` in `backend/`, and commit the regenerated `data/embeddings.json`.
+The assistant learns about Kishore from **your own files** — primarily `public/resume.pdf`
+(the same résumé the site links), plus any optional `.md`/`.txt`/`.pdf` notes you drop into
+`backend/data/knowledge/`. After changing them, run `python scripts/build_index.py` in `backend/`
+and commit the regenerated `data/embeddings.json`.
+
+## ⚙️ Backend env vars (set in Render)
+`OPENROUTER_API_KEY` (secret), `OPENROUTER_MODELS` (fallback list), `ALLOWED_ORIGINS` (your frontend
+origin), `GITHUB_USERNAME`, and — to enable the contact form — `RESEND_API_KEY` + `CONTACT_TO_EMAIL`
+(or the `SMTP_*` vars). See `backend/.env.example`.

@@ -16,12 +16,23 @@ services:
       - key: OPENROUTER_API_KEY
         sync: false            # set this secret in the dashboard
       - key: OPENROUTER_MODEL
-        value: meta-llama/llama-3.3-70b-instruct:free
+        value: google/gemma-4-31b-it:free
+      - key: OPENROUTER_MODELS
+        value: google/gemma-4-31b-it:free,qwen/qwen3.8-27b:free,z-ai/glm-5.2:free
       - key: ALLOWED_ORIGINS
         sync: false            # e.g. https://your-portfolio.vercel.app
       - key: EMBED_MODEL
         value: BAAI/bge-small-en-v1.5
       - key: TOP_K
-        value: "4"
+        value: "6"
+      - key: GITHUB_USERNAME
+        value: kishorevijay07
+      # Contact form (set these as secrets in the dashboard to enable emailing):
+      - key: RESEND_API_KEY
+        sync: false
+      - key: CONTACT_TO_EMAIL
+        sync: false
+      - key: CONTACT_FROM_EMAIL
+        value: onboarding@resend.dev
       - key: PYTHON_VERSION
         value: "3.11.9"

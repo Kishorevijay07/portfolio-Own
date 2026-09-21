@@ -1,0 +1,84 @@
+Kishore Selvaraj — Professional Profile
+
+This is the professional knowledge base used by the portfolio AI assistant. It contains only
+public, professional information (education, skills, projects, experience, goals).
+
+## Identity
+- Name: Kishore Selvaraj (also known as Kishore S, Kishore Vijay)
+- Location: Chennai, Tamil Nadu, India
+- Current status: Final-semester Integrated M.Sc. Information Technology student
+- Professional identity: Software Developer, AI Engineer, Full Stack Developer, Software Engineering student
+- GitHub: kishorevijay07
+- LinkedIn: Kishore Selvaraj
+
+## Education
+- Integrated M.Sc. in Information Technology — College of Engineering, Guindy (CEG), Anna University. Started October 2022; currently in the final semester. CGPA: 7.1/10.
+- Higher Secondary Certificate — Vailankanni Higher Secondary School (2019–2021).
+- Achievements: Runner-up at the Xackathon hackathon; recipient of the Active Performer Award at CEG.
+- Relevant coursework: Data Structures & Algorithms, Operating Systems, DBMS, Computer Networks, OOP, Machine Learning.
+
+## Technical Skills
+- Programming languages: Python (backend, machine learning, data analysis, AI engineering, numerical methods), JavaScript (frontend and backend), TypeScript (React and AI applications), Java (intermediate), C (fundamentals).
+- Frontend: React.js, React Hooks (useState, useQuery, useMutation, useQueryClient), React Router, HTML, CSS, Tailwind CSS, DaisyUI, React with TypeScript, single-page application architecture, responsive UI, frontend deployment on Cloudflare Pages.
+- Backend: Python, FastAPI, Node.js, Express.js, REST API design, authentication and authorization (JWT and cookie-based), role-based access control, bcrypt password hashing, middleware, API and database integration. Prefers FastAPI + Python for AI projects; uses Node.js/Express for others.
+- Databases: PostgreSQL (including pgvector), MySQL, MongoDB, Redis, schema design, SQL, relational data modeling.
+- AI & ML: machine learning, deep learning, NLP, LLMs, Retrieval-Augmented Generation (RAG), AI agents and assistants, model fine-tuning (LoRA, QLoRA, supervised fine-tuning), embeddings, vector databases, semantic search, hybrid retrieval, reranking, multi-agent architectures, model evaluation. Tools: Ollama, Phi-3, OpenRouter API, FAISS, Qdrant, pgvector, scikit-learn, Pandas, HuggingFace Transformers.
+- DevOps & tools: Git, GitHub, Docker, Jenkins, AWS, Postman, Render, Netlify, Cloudflare Pages, npm, Nodemon.
+
+## Work Experience
+- Software Developer Intern — IIT Madras-incubated startup, Chennai (June 2025 – November 2025). Worked on a booking management system: developed REST APIs, implemented backend business logic, and contributed to performance and reliability improvements. Keen to gain further practical experience through startup internships.
+
+## Career Goals
+- Target roles: Software Engineer / SDE, AI Engineer, Machine Learning Engineer, Full Stack Developer, Python Developer, Backend Developer.
+- Preferred environments: technology startups, product-based companies, and AI-focused companies.
+- Preferences: gain practical engineering experience, work on real-world products, build scalable systems, learn from experienced developers, and deepen AI engineering expertise.
+- Open to opportunities in Chennai, Bengaluru, and Hyderabad. Especially drawn to startups for hands-on, practical learning.
+
+## Major Projects
+
+### Another Me — Personal AI Operating System
+A multilingual personal AI system that understands the user, stores personal information, manages tasks, updates memories, converses naturally, and proactively reminds the user about important things. Vision: an AI that builds a structured understanding of the user and acts as a digital companion. Planned capabilities: identity understanding, preference and goal storage, to-do management, conversation history, memory retrieval, proactive reminders, multilingual support, long-term context, and contradiction handling with user-controlled memory. Memory engine concepts: provenance, confidence scores, versioning, CRUD, user isolation, semantic and hybrid retrieval, embeddings, vector storage, and RAG. Stack: React + TypeScript (frontend), FastAPI + Python (backend), PostgreSQL + pgvector (database), Redis with background workers, OpenRouter (LLM provider).
+
+### TherapyOS — AI-powered SaaS clinic management platform
+A multi-tenant SaaS platform for pediatric occupational therapy clinics in India that helps clinics manage patients, therapists, appointments, communication, billing, and clinical documentation. User roles: clinic administrators, therapists, parents, and platform administrators. Application surfaces: admin/clinic app, therapist portal, parent portal, and a developer/platform administration portal. Core features: centralized patient records, appointment scheduling, WhatsApp reminders, attendance tracking, therapist and clinic performance dashboards, role-based access control, billing and subscription management, therapy specialization management, and clinic-specific feature toggles. AI features: AI SOAP note assistant, AI progress report generator, AI parent update generator, AI session summary assistant, AI clinic analytics and insights, and AI-powered patient history search. Parent–therapist collaboration: parent timeline, session scheduling and completion uploads, photo/video/voice-note/document sharing, parent–therapist chat, and home activity tracking. Tech and deployment: React frontend, FastAPI backend (Node.js in some contexts), PostgreSQL, Redis, Celery, and Docker; deployed with Cloudflare Pages and Render; integrations for Razorpay billing and WhatsApp messaging.
+
+### AI-Powered Offline Python Tutor
+An offline AI tutoring application for learning Python. Tech: Python, React, FastAPI, Ollama, Phi-3, LoRA/QLoRA. Fine-tuned a Phi-3 model via supervised fine-tuning on 10,000+ code–explanation pairs. Features offline tutoring, Python learning assistance, real-time error detection, and reasoning-based debugging.
+
+### HR AssistHub
+An HR automation platform (team project) that automates employee communication and meeting coordination, using LLM + RAG over internal HR documents for automated email drafting and natural-language meeting scheduling.
+
+### AgentOS — Multi-agent AI architecture
+An autonomous multi-agent system that plans, executes, and self-reflects on tasks. Specialized agents include Planner, Research, Coding, Testing, and Documentation (with Personalization, Sequencing, and CRM agents in broader designs). Uses LangGraph/LangChain, OpenAI-compatible LLMs, the Model Context Protocol (MCP), FAISS/Qdrant, metadata filtering, multi-query retrieval, reranking, and agentic reasoning loops, with short- and long-term memory via FAISS embeddings.
+
+### Other software projects
+- X/Twitter Clone — full-stack social media app (React.js, Node.js, MongoDB, JWT, Cloudinary).
+- College Attendance Management System — React.js, Express.js, MongoDB; role-based access for faculty and administrators.
+- MERN Digital Attendance System — MongoDB, Express.js, React.js, Node.js.
+- Heart Rate Monitor — healthcare backend (Node.js, Express.js, MySQL) with bcrypt/JWT/cookie authentication and users, patients, and heart-rate data management.
+- Social Media Post Website — React.js with hooks, router, and localStorage.
+- Basic Banking Website — full-stack banking project.
+
+### Machine learning projects
+Book Sales Prediction (regression), Food Delivery Time Prediction (predictive analytics), Stock Prediction (hackathon), and Butterfly Species Classification (image classification). Also worked with K-Means clustering, decision trees, Pandas, scikit-learn, and numerical methods (interpolation, Gauss-Seidel, power method).
+
+## Deployment & Infrastructure
+Experience across Render (backend hosting), Cloudflare Pages (frontend), Cloudflare R2 (object storage), Netlify, and AWS (learning). Comfortable with custom domains, DNS configuration, Vite environment variables, Docker, and PostgreSQL hosting.
+
+## Hardware & IoT
+Explored IoT and hardware projects: biometric attendance devices (ZKTeco, Hikvision) supporting face/fingerprint/card/PIN authentication over Ethernet and Wi-Fi, integrating device attendance data into a FastAPI backend. Arduino projects: relay module interfacing and wiring, IoT theory, and Tinkercad prototyping.
+
+## DSA & Interview Preparation
+Solved 400+ Data Structures & Algorithms problems on LeetCode (arrays, strings, hashmaps, prefix sums, sorting, binary search, sliding window, two pointers, binary trees and BSTs, dynamic programming, recursion). Prepared for Amazon (SDE internship online assessment), TCS (NQT), and Infosys (on-campus coding). Studies system design and backend/AI engineering interviews.
+
+## Professional Branding
+Resume positioned around AI engineering, software engineering, full-stack development, machine learning, LLMs, RAG, backend development, and system design. Example LinkedIn headline: "AI Engineer | System Design | ML, Deep Learning, LLMs, RAG | Full-Stack Developer."
+
+## Business & Entrepreneurship Interests
+Interested in building and monetizing software products, especially SaaS. Ideas explored include TherapyOS, a College ERP, WealthMind, a multi-agent personal AI assistant, and AI tools for businesses. Interested in SaaS and subscription models, customer acquisition, product-market fit, and payment gateway integration.
+
+## Learning Preferences
+Prefers step-by-step explanations (beginner-friendly before advanced), practical and real-world examples, pattern-based learning, structured learning plans, and hands-on coding practice. For DSA: understand the concept, then the underlying pattern, learn to identify it, study worked examples, and practice. For new technologies: understand the architecture, learn implementation steps, understand why it is used, troubleshoot, and apply it to real projects.
+
+## Product Development Philosophy
+Wants to build real-world, AI-powered products (not just CRUD apps), understand systems deeply, and focus on production readiness, security, scalability, and architecture. Interested in combining software engineering with AI engineering and building products that can generate revenue, ideally in startup environments.
