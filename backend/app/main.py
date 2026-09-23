@@ -45,7 +45,7 @@ def _validate_question(body: ChatRequest) -> str:
             status_code=400,
             detail=f"Question too long (max {config.MAX_QUESTION_CHARS} characters).",
         )
-    if not config.OPENROUTER_API_KEY:
+    if not config.GEMINI_API_KEY:
         raise HTTPException(status_code=503, detail="AI assistant is not configured yet.")
     return question
 
@@ -72,7 +72,7 @@ async def health():
         "status": "ok",
         "chunks": len(index.chunks),
         "index_source": index.source,
-        "configured": bool(config.OPENROUTER_API_KEY),
+        "configured": bool(config.GEMINI_API_KEY),
     }
 
 

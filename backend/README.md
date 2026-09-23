@@ -1,13 +1,13 @@
 # Portfolio AI Assistant — Backend
 
 A small FastAPI service that powers the "Ask AI" assistant on the portfolio. It runs a
-lightweight RAG pipeline over a markdown knowledge base about Kishore and uses
-**OpenRouter** for generation.
+lightweight RAG pipeline over a knowledge base about Kishore and uses **Google Gemini**
+(free tier) for generation.
 
 - Embeddings: local `fastembed` (ONNX, no PyTorch) → fits Render's free tier.
 - Retrieval: cosine similarity over precomputed vectors (`data/embeddings.json`), with a
   keyword fallback if vectors are missing or embedding fails.
-- Generation: OpenRouter chat completion (the "AI mind").
+- Generation: Google Gemini `generateContent` / `streamGenerateContent` (the "AI mind").
 
 ## Endpoints
 - `GET /health` — fast, no LLM call. Used by the frontend to wake the dyno (cold start).
@@ -18,11 +18,13 @@ lightweight RAG pipeline over a markdown knowledge base about Kishore and uses
 - `POST /contact` — `{ name, email, message }` → emails you (Resend or SMTP). Rate-limited.
 - `GET /docs` — interactive Swagger UI.
 
-### Model fallback (free-tier reliability)
-Free OpenRouter models are flaky (a model can return 404 "no provider" or 429 "rate limited").
-`OPENROUTER_MODELS` is a comma-separated list (max 3) that OpenRouter tries in order, so one
-model being unavailable falls through to the next. Adding ~$10 credit to OpenRouter raises the
-free-tier limits substantially.
+### Model (Gemini free tier)
+Set `GEMINI_MODEL` to any Gemini model your key can access (default `gemini-2.5-flash`).
+Free-tier keys from Google AI Studio have generous daily limits. List models available to
+your key with:
+```bash
+curl "https://generativelanguage.googleapis.com/v1beta/models?key=YOUR_KEY"
+```
 
 ### Contact form email
 Set **either** Resend (recommended) **or** SMTP, plus `CONTACT_TO_EMAIL`:
@@ -38,7 +40,7 @@ python -m venv .venv
 # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
 
-cp .env.example .env          # then paste your OpenRouter key into .env
+cp .env.example .env          # then paste your Gemini key into .env
 python scripts/build_index.py # builds data/embeddings.json (real embeddings)
 
 uvicorn app.main:app --reload # http://localhost:8000
@@ -65,7 +67,7 @@ résumé is passed to the model in full.
 1. Push this repo to GitHub.
 2. Render → New → Blueprint → pick this repo (uses `backend/render.yaml`).
 3. In the service's Environment, set:
-   - `OPENROUTER_API_KEY` = your key from https://openrouter.ai/keys
+   - `GEMINI_API_KEY` = your key from https://aistudio.google.com/apikey
    - `ALLOWED_ORIGINS` = your deployed frontend origin, e.g. `https://your-portfolio.vercel.app`
 4. Deploy. Copy the service URL and set it as `REACT_APP_API_URL` in the frontend build.
 
@@ -74,5 +76,5 @@ résumé is passed to the model in full.
 > until it's ready.
 
 ## Security notes
-- The OpenRouter key lives only in environment variables — never in the repo or the frontend bundle.
+- The Gemini key lives only in environment variables — never in the repo or the frontend bundle.
 - CORS is restricted to `ALLOWED_ORIGINS`; `/chat` is rate-limited and caps question length.

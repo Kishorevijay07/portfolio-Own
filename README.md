@@ -1,7 +1,7 @@
 # Kishore Selvaraj — Portfolio
 
 A clean, light, minimal React portfolio with an **AI assistant** that answers questions about
-Kishore using a small RAG pipeline (FastAPI + OpenRouter).
+Kishore using a small RAG pipeline (FastAPI + Google Gemini).
 
 - **Frontend:** React (Create React App), static — deploy to Vercel/Netlify.
 - **Backend:** FastAPI RAG service — deploy to Render (free tier). See [`backend/README.md`](backend/README.md).
@@ -41,7 +41,7 @@ npm start                      # http://localhost:3000
 ```
 
 **Backend** — see [`backend/README.md`](backend/README.md) (venv → install → build index → uvicorn).
-You'll need a free OpenRouter API key from https://openrouter.ai/keys.
+You'll need a free Gemini API key from https://aistudio.google.com/apikey.
 
 ---
 
@@ -56,7 +56,7 @@ deployed Render backend URL (e.g. `https://kishore-portfolio-assistant.onrender.
 
 ### Backend (Render, free)
 Render → New → Blueprint → this repo (uses `backend/render.yaml`). In the service Environment set:
-- `OPENROUTER_API_KEY` — your key (secret, never committed)
+- `GEMINI_API_KEY` — your key (secret, never committed)
 - `ALLOWED_ORIGINS` — your frontend origin (e.g. `https://your-portfolio.vercel.app`)
 
 > The free backend sleeps after ~15 min idle and cold-starts in ~50s. That's expected — the
@@ -78,6 +78,6 @@ The assistant learns about Kishore from **your own files** — primarily `public
 and commit the regenerated `data/embeddings.json`.
 
 ## ⚙️ Backend env vars (set in Render)
-`OPENROUTER_API_KEY` (secret), `OPENROUTER_MODELS` (fallback list), `ALLOWED_ORIGINS` (your frontend
+`GEMINI_API_KEY` (secret), `GEMINI_MODEL` (default `gemini-2.5-flash`), `ALLOWED_ORIGINS` (your frontend
 origin), `GITHUB_USERNAME`, and — to enable the contact form — `RESEND_API_KEY` + `CONTACT_TO_EMAIL`
 (or the `SMTP_*` vars). See `backend/.env.example`.

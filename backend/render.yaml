@@ -13,12 +13,10 @@ services:
     startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     healthCheckPath: /health
     envVars:
-      - key: OPENROUTER_API_KEY
+      - key: GEMINI_API_KEY
         sync: false            # set this secret in the dashboard
-      - key: OPENROUTER_MODEL
-        value: google/gemma-4-31b-it:free
-      - key: OPENROUTER_MODELS
-        value: google/gemma-4-31b-it:free,qwen/qwen3.8-27b:free,z-ai/glm-5.2:free
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
       - key: ALLOWED_ORIGINS
         sync: false            # e.g. https://your-portfolio.vercel.app
       - key: EMBED_MODEL

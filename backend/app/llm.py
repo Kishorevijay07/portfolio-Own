@@ -1,4 +1,8 @@
-"""OpenRouter chat client — the assistant's generation ("AI mind")."""
+"""Google Gemini chat client — the assistant's generation ("AI mind").
+
+Uses the Google AI Studio Generative Language API (generateContent /
+streamGenerateContent). Free-tier keys come from https://aistudio.google.com/apikey
+"""
 import json
 from typing import AsyncIterator, Dict, List, Optional
 
@@ -36,39 +40,49 @@ class LLMError(Exception):
     pass
 
 
-def _model_params() -> Dict:
-    """Send a fallback list when configured (OpenRouter tries them in order),
-    otherwise a single model."""
-    models = config.OPENROUTER_MODELS
-    if len(models) >= 2:
-        return {"models": models[:3]}
-    return {"model": models[0] if models else config.OPENROUTER_MODEL}
-
-
-def _headers() -> Dict:
-    headers = {
-        "Authorization": f"Bearer {config.OPENROUTER_API_KEY}",
-        "Content-Type": "application/json",
-    }
-    if config.SITE_URL:
-        headers["HTTP-Referer"] = config.SITE_URL
-    if config.SITE_NAME:
-        headers["X-Title"] = config.SITE_NAME
-    return headers
-
-
-def _build_messages(question: str, contexts: List[Dict], history: Optional[List[Dict]]) -> List[Dict]:
+def _system_instruction(contexts: List[Dict]) -> Dict:
     context_text = "\n\n".join(
         f"[{c.get('source', 'doc')}]\n{c['text']}" for c in contexts
     ) or "(no additional context found)"
+    return {"parts": [{"text": SYSTEM_PROMPT.format(context=context_text)}]}
 
-    messages = [{"role": "system", "content": SYSTEM_PROMPT.format(context=context_text)}]
+
+def _build_contents(question: str, history: Optional[List[Dict]]) -> List[Dict]:
+    """Gemini 'contents' use roles 'user' / 'model' (no 'system' turn)."""
+    contents: List[Dict] = []
     for turn in (history or [])[-6:]:
-        role, content = turn.get("role"), (turn.get("content") or "").strip()
-        if role in ("user", "assistant") and content:
-            messages.append({"role": role, "content": content})
-    messages.append({"role": "user", "content": question})
-    return messages
+        role = turn.get("role")
+        content = (turn.get("content") or "").strip()
+        if not content or role not in ("user", "assistant"):
+            continue
+        gemini_role = "user" if role == "user" else "model"
+        contents.append({"role": gemini_role, "parts": [{"text": content}]})
+    contents.append({"role": "user", "parts": [{"text": question}]})
+    return contents
+
+
+def _payload(question: str, contexts: List[Dict], history: Optional[List[Dict]]) -> Dict:
+    return {
+        "systemInstruction": _system_instruction(contexts),
+        "contents": _build_contents(question, history),
+        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 600},
+    }
+
+
+def _headers() -> Dict:
+    return {"Content-Type": "application/json", "x-goog-api-key": config.GEMINI_API_KEY}
+
+
+def _extract_text(data: Dict) -> str:
+    """Pull the text out of a GenerateContentResponse (or a streamed chunk)."""
+    try:
+        candidates = data.get("candidates") or []
+        if not candidates:
+            return ""
+        parts = candidates[0].get("content", {}).get("parts", []) or []
+        return "".join(p.get("text", "") for p in parts)
+    except (AttributeError, IndexError, KeyError, TypeError):
+        return ""
 
 
 async def generate_answer(
@@ -76,29 +90,19 @@ async def generate_answer(
     contexts: List[Dict],
     history: Optional[List[Dict]] = None,
 ) -> str:
-    if not config.OPENROUTER_API_KEY:
-        raise LLMError("OpenRouter API key not configured")
+    if not config.GEMINI_API_KEY:
+        raise LLMError("Gemini API key not configured")
 
-    payload = {
-        **_model_params(),
-        "messages": _build_messages(question, contexts, history),
-        "temperature": 0.3,
-        "max_tokens": 600,
-    }
-
+    url = f"{config.GEMINI_BASE_URL}/models/{config.GEMINI_MODEL}:generateContent"
     async with httpx.AsyncClient(timeout=60) as client:
-        resp = await client.post(
-            f"{config.OPENROUTER_BASE_URL}/chat/completions",
-            json=payload,
-            headers=_headers(),
-        )
+        resp = await client.post(url, json=_payload(question, contexts, history), headers=_headers())
         resp.raise_for_status()
         data = resp.json()
 
-    try:
-        return data["choices"][0]["message"]["content"].strip()
-    except (KeyError, IndexError, TypeError) as exc:
-        raise LLMError(f"Unexpected OpenRouter response: {data}") from exc
+    text = _extract_text(data).strip()
+    if not text:
+        raise LLMError(f"Empty or blocked Gemini response: {data}")
+    return text
 
 
 async def stream_answer(
@@ -106,36 +110,26 @@ async def stream_answer(
     contexts: List[Dict],
     history: Optional[List[Dict]] = None,
 ) -> AsyncIterator[str]:
-    """Yield answer tokens as they arrive from OpenRouter (SSE)."""
-    if not config.OPENROUTER_API_KEY:
-        raise LLMError("OpenRouter API key not configured")
+    """Yield answer tokens as they arrive from Gemini (SSE)."""
+    if not config.GEMINI_API_KEY:
+        raise LLMError("Gemini API key not configured")
 
-    payload = {
-        **_model_params(),
-        "messages": _build_messages(question, contexts, history),
-        "temperature": 0.3,
-        "max_tokens": 600,
-        "stream": True,
-    }
-
+    url = f"{config.GEMINI_BASE_URL}/models/{config.GEMINI_MODEL}:streamGenerateContent?alt=sse"
     async with httpx.AsyncClient(timeout=90) as client:
         async with client.stream(
-            "POST",
-            f"{config.OPENROUTER_BASE_URL}/chat/completions",
-            json=payload,
-            headers=_headers(),
+            "POST", url, json=_payload(question, contexts, history), headers=_headers()
         ) as resp:
             resp.raise_for_status()
             async for line in resp.aiter_lines():
                 if not line or not line.startswith("data:"):
                     continue
-                data = line[len("data:"):].strip()
-                if data == "[DONE]":
-                    break
-                try:
-                    obj = json.loads(data)
-                    delta = obj["choices"][0]["delta"].get("content")
-                except (json.JSONDecodeError, KeyError, IndexError, TypeError):
+                chunk = line[len("data:"):].strip()
+                if not chunk or chunk == "[DONE]":
                     continue
-                if delta:
-                    yield delta
+                try:
+                    obj = json.loads(chunk)
+                except json.JSONDecodeError:
+                    continue
+                text = _extract_text(obj)
+                if text:
+                    yield text
