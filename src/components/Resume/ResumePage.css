@@ -1,0 +1,375 @@
+/* ── Dedicated Resume Page Styling ── */
+.resume-page-wrapper {
+  min-height: 100vh;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Top Navigation Bar ── */
+.resume-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+}
+
+.resume-topbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resume-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  transition: color 0.2s, transform 0.2s;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.resume-back-link:hover {
+  color: var(--accent);
+  transform: translateX(-2px);
+}
+
+.back-arrow {
+  font-size: 16px;
+  transition: transform 0.2s;
+}
+
+.resume-back-link:hover .back-arrow {
+  transform: translateX(-3px);
+}
+
+.resume-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-sm {
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+}
+
+/* ── Container ── */
+.resume-container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 32px auto;
+  padding: 0 24px;
+  flex: 1;
+}
+
+/* ── Profile Showcase Card ── */
+.resume-profile-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.resume-photo-box {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.resume-photo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  border: 4px solid var(--panel);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.resume-status-badge {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pulse 2s infinite;
+}
+
+.resume-profile-info {
+  flex: 1;
+}
+
+.resume-name-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.resume-name {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.resume-badge-role {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.3px;
+}
+
+.resume-headline {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.resume-bio {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 720px;
+}
+
+/* ── Links / Pills ── */
+.resume-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.resume-contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.resume-contact-pill:hover:not(.pill-neutral) {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.pill-neutral {
+  cursor: default;
+  color: var(--text-dim);
+}
+
+.pill-icon {
+  font-size: 13px;
+}
+
+/* ── Toolbar Above Viewer ── */
+.resume-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 0 4px;
+}
+
+.resume-toolbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toolbar-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.toolbar-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-display);
+}
+
+/* ── PDF Viewer Card ── */
+.resume-viewer-card {
+  width: 100%;
+  height: 920px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 48px;
+}
+
+.resume-pdf-embed {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ── Fallback if PDF not rendered in object ── */
+.resume-viewer-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: #fbf9f5;
+  text-align: center;
+}
+
+.fallback-content {
+  max-width: 480px;
+}
+
+.fallback-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.fallback-content h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.fallback-content p {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.fallback-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── Footer ── */
+.resume-footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.footer-return-link {
+  color: var(--accent);
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.footer-return-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Mobile & Tablet Responsiveness ── */
+@media (max-width: 820px) {
+  .resume-profile-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 28px 20px;
+    gap: 20px;
+  }
+
+  .resume-name-row {
+    justify-content: center;
+  }
+
+  .resume-links-row {
+    justify-content: center;
+  }
+
+  .resume-viewer-card {
+    height: 700px;
+  }
+
+  .resume-topbar {
+    padding: 12px 16px;
+  }
+
+  .resume-container {
+    padding: 0 16px;
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 540px) {
+  .resume-topbar-actions .btn-ghost {
+    display: none;
+  }
+
+  .resume-viewer-card {
+    height: 580px;
+  }
+
+  .resume-name {
+    font-size: 24px;
+  }
+}

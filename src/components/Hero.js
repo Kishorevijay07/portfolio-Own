@@ -37,8 +37,15 @@ function useTypingEffect() {
   return ROLES[roleIdx].slice(0, charIdx);
 }
 
-export default function Hero() {
+export default function Hero({ onNavigateResume }) {
   const typedText = useTypingEffect();
+
+  const handleResumeClick = (e) => {
+    if (onNavigateResume) {
+      e.preventDefault();
+      onNavigateResume();
+    }
+  };
 
   return (
     <section className="hero" id="home">
@@ -82,12 +89,11 @@ export default function Hero() {
               View Projects
             </a>
             <a
-              href={`${process.env.PUBLIC_URL}/resume.pdf`}
+              href="/resume"
+              onClick={handleResumeClick}
               className="btn btn-ghost"
-              target="_blank"
-              rel="noreferrer"
             >
-              Résumé ↓
+              Résumé ↗
             </a>
             <a href="#contact" className="btn btn-ghost">
               Say Hello

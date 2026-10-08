@@ -19,12 +19,19 @@ function useReveal() {
 
 const EMPTY = { name: '', email: '', message: '' };
 
-export default function Contact() {
+export default function Contact({ onNavigateResume }) {
   const headerRef = useReveal();
   const bodyRef = useReveal();
   const [form, setForm] = useState(EMPTY);
   const [state, setState] = useState('idle'); // idle | sending | sent | error
   const [error, setError] = useState('');
+
+  const handleResumeClick = (e) => {
+    if (onNavigateResume) {
+      e.preventDefault();
+      onNavigateResume();
+    }
+  };
 
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -125,12 +132,11 @@ export default function Contact() {
               LinkedIn
             </a>
             <a
-              href={`${process.env.PUBLIC_URL}/resume.pdf`}
+              href="/resume"
+              onClick={handleResumeClick}
               className="social-link social-link-accent"
-              target="_blank"
-              rel="noreferrer"
             >
-              Résumé ↓
+              Résumé ↗
             </a>
           </div>
         </div>
